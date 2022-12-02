@@ -4,7 +4,7 @@
 
 Follow the installation in this order to make sure the higher priority package version are compatible with each other.
 
-## Highest Priority Requirements
+## Python, PyTorch and TorchVision
 - Python >= 3.8 (Python 3.9 does not support torchvision build with ffmpeg). Details in this [issue](https://github.com/facebookresearch/SlowFast/issues/181#issuecomment-1241692131) and mentioned in torchvision source code with a FIXME comment (https://github.com/pytorch/vision/blob/15a9a93b9e0e6173b936691a2cddced0ecfd271f/setup.py#L374)
 - PyTorch >= 1.3 and [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation.
   You can install them together at [pytorch.org](https://pytorch.org) to make sure of this. If you follow the installation steps here, you won't need to install torchvision from source for ffmpeg support, it will be automatically handled.
