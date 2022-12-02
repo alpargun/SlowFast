@@ -1,39 +1,42 @@
 # Installation
 
 ## Requirements
-- Python >= 3.8
-- Numpy
-- PyTorch >= 1.3
-- [fvcore](https://github.com/facebookresearch/fvcore/): `pip install 'git+https://github.com/facebookresearch/fvcore'`
-- [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation.
+
+Follow the installation in this order to make sure the higher priority package version are compatible with each other.
+
+## Highest Priority Requirements
+- Python >= 3.8 (Python 3.9 does not support torchvision build with ffmpeg). Details in this [issue](https://github.com/facebookresearch/SlowFast/issues/181#issuecomment-1241692131) and mentioned in torchvision source code with a FIXME comment (https://github.com/pytorch/vision/blob/15a9a93b9e0e6173b936691a2cddced0ecfd271f/setup.py#L374)
+- PyTorch >= 1.3 and [torchvision](https://github.com/pytorch/vision/) that matches the PyTorch installation.
   You can install them together at [pytorch.org](https://pytorch.org) to make sure of this.
+
+## Video backend
+SlowFast supports two video backends: torchvision and PyAV
+- ffmpeg: `conda install ffmpeg=4.2` This version works well with newer pytorch and torchvision distibutions. By default torchvision will be used, and Facebook updates the framework according to torchvision.
+- PyTorchVideo: `pip install "git+https://github.com/facebookresearch/pytorchvideo.git"`. Do NOT use `pip install pytorchvideo" as included in the official repo since it misses some functions needed.
+- PyAV: Will be installed along with PyTorchVideo, so do NOT use: `conda install av -c conda-forge` as included in the original repo as this conda-forge installation can have contradictions with current ffmpeg version. Also, this video backend does not work out of box. In the newer SlowFast versions, there are type mismatches in the datasets/decoder.py file. In order to make it run, please read this [pull request](https://github.com/facebookresearch/SlowFast/pull/541) and this [comment in this issue](https://github.com/facebookresearch/SlowFast/issues/181#issuecomment-1122954279). You need to update the decoder.py file yourself as Facebook is taking its time to accept the pull request.
+
+## Other Requirements
+- Numpy
+- [fvcore](https://github.com/facebookresearch/fvcore/): `pip install 'git+https://github.com/facebookresearch/fvcore'`
 - simplejson: `pip install simplejson`
 - GCC >= 4.9
-- PyAV: `conda install av -c conda-forge`
-- ffmpeg (4.0 is prefereed, will be installed along with PyAV)
 - PyYaml: (will be installed along with fvcore)
 - tqdm: (will be installed along with fvcore)
 - iopath: `pip install -U iopath` or `conda install -c iopath iopath`
 - psutil: `pip install psutil`
 - OpenCV: `pip install opencv-python`
-- torchvision: `pip install torchvision` or `conda install torchvision -c pytorch`
-- tensorboard: `pip install tensorboard`
+- tensorboard: `conda install tensorboard`. Use conda install to have the necessary requirements instead of the pip command included in the official repo.
+- scikit-learn: ̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣`pip install scikit-learn` (sklearn is not supported anymore)
 - moviepy: (optional, for visualizing video on tensorboard) `conda install -c conda-forge moviepy` or `pip install moviepy`
-- PyTorchVideo: `pip install "git+https://github.com/facebookresearch/pytorchvideo.git"`
-- [Detectron2](https://github.com/facebookresearch/detectron2):
 - FairScale: `pip install 'git+https://github.com/facebookresearch/fairscale'`
+- cython: `pip install cython`
+- [Detectron2](https://github.com/facebookresearch/detectron2):
+
 ```
-    pip install -U torch torchvision cython
     pip install -U 'git+https://github.com/facebookresearch/fvcore.git' 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
     git clone https://github.com/facebookresearch/detectron2 detectron2_repo
     pip install -e detectron2_repo
     # You can find more details at https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md
-```
-
-## Pytorch
-Please follow PyTorch official instructions to install from source:
-```
-git clone --recursive https://github.com/pytorch/pytorch
 ```
 
 ## PySlowFast
@@ -48,7 +51,7 @@ Add this repository to $PYTHONPATH.
 export PYTHONPATH=/path/to/SlowFast/slowfast:$PYTHONPATH
 ```
 
-### Build PySlowFast
+## Build PySlowFast
 
 After having the above dependencies, run:
 ```
