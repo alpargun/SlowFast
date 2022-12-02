@@ -1,7 +1,7 @@
 TASK: ssl
 TRAIN:
-  DATASET: kinetics
-  BATCH_SIZE: 64
+  DATASET: bdd
+  BATCH_SIZE: 32
   EVAL_PERIOD: 10
   CHECKPOINT_PERIOD: 5
   AUTO_RESUME: True
@@ -38,9 +38,10 @@ DATA:
   TRAIN_CROP_SIZE: 224
   TEST_CROP_SIZE: 256
   INPUT_CHANNEL_NUM: [3]
-  PATH_LABEL_SEPARATOR: " "
+  PATH_LABEL_SEPARATOR: ","
+  PATH_TO_DATA_DIR: /home/alp/Desktop/bdd100k/videos/
 DATA_LOADER:
-  NUM_WORKERS: 8
+  NUM_WORKERS: 2
 BN:
   USE_PRECISE_STATS: False
   NUM_BATCHES_PRECISE: 200
@@ -57,8 +58,14 @@ SOLVER:
   OPTIMIZING_METHOD: sgd
 TEST:
   ENABLE: True
-  DATASET: kinetics
-  BATCH_SIZE: 64
-NUM_GPUS: 8
+  DATASET: bdd
+  BATCH_SIZE: 32
+NUM_GPUS: 1
 RNG_SEED: 0
-OUTPUT_DIR: .
+
+OUTPUT_DIR: results/ssl/moco/bdd-with-vision-3
+
+TENSORBOARD:
+  ENABLE: True
+  #LOG_DIR: # Leave empty to use cfg.OUTPUT_DIR/runs-{cfg.TRAIN.DATASET} as path.
+  #CLASS_NAMES_PATH: /home/alp/Desktop/kinetics-dataset/k400/classids.json
