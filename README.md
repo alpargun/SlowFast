@@ -1,3 +1,10 @@
+# Why This Fork Exists?
+
+- Fixes INSTALL.md with more detailed explanation and correct commands.
+- Tyoecasting in datasets/decoder.py to fix non-writeable tensor warning.
+- Adds registry for Berkeley Deep Drive (BDD) dataset.
+- Adds more experiment configurations.
+
 # PySlowFast
 
 PySlowFast is an open source video understanding codebase from FAIR that provides state-of-the-art video classification models with efficient training. This repository includes implementations of the following methods:
