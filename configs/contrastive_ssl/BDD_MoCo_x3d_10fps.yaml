@@ -1,0 +1,86 @@
+TASK: ssl
+TRAIN:
+  DATASET: bdd
+  BATCH_SIZE: 64
+  EVAL_PERIOD: 10
+  CHECKPOINT_PERIOD: 5
+  #CHECKPOINT_FILE_PATH: /home/alp/Desktop/SlowFast/results/ssl/bdd/moco-x3d/39parts-x3d-xs_10fps/checkpoints/ssl_checkpoint_epoch_00250.pyth
+  AUTO_RESUME: True
+  MIXED_PRECISION: True
+
+#RESNET:
+  #ZERO_INIT_FINAL_BN: True
+  #TRANS_FUNC: x3d_transform
+  #STRIDE_1X1: False
+
+X3D:
+  WIDTH_FACTOR: 2.0
+  DEPTH_FACTOR: 2.2
+  BOTTLENECK_FACTOR: 2.25
+  DIM_C5: 2048
+  DIM_C1: 12
+
+MODEL:
+  NUM_CLASSES: 128
+  MODEL_NAME: ContrastiveModel
+  #ARCH: slow_c2d
+  ARCH: x3d
+  LOSS_FUNC: contrastive_loss
+  DROPOUT_RATE: 0.0
+  #HEAD_ACT: none
+CONTRASTIVE:
+  T: 0.1 # default 0.07
+  NUM_MLP_LAYERS: 3 # default 1
+  SEQUENTIAL: True  # def fault
+  MOCO_MULTI_VIEW_QUEUE: True # default: False
+  MOMENTUM: 0.994 # default 0.5 ours: 0.999
+  MOMENTUM_ANNEALING: True # default false
+  TYPE: moco # default mem
+DATA:
+  NUM_FRAMES: 4
+  SAMPLING_RATE: 10
+  TRAIN_CROP_NUM_TEMPORAL: 8 # was 4 # 40  # default 1
+  TRAIN_CROP_NUM_SPATIAL: 1  # default 1
+  TRAIN_JITTER_SCALES_RELATIVE: [0.2, 0.766]
+  TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
+  SSL_MOCOV2_AUG: True
+  COLOR_RND_GRAYSCALE: 0.2 # default 0.0
+  SSL_COLOR_JITTER: True # default false
+  SSL_COLOR_HUE: 0.15
+  SSL_COLOR_BRI_CON_SAT: [0.6, 0.6, 0.6] # default [0.4, 0.4, 0.4]
+  TRAIN_JITTER_SCALES: [182, 228]
+  TRAIN_CROP_SIZE: 160
+  TEST_CROP_SIZE: 182
+  INPUT_CHANNEL_NUM: [3]
+  PATH_LABEL_SEPARATOR: ","
+  PATH_TO_DATA_DIR: /home/alp/Desktop/bdd100k/videos/
+  DECODING_BACKEND: torchvision
+DATA_LOADER:
+  NUM_WORKERS: 8
+BN:
+  USE_PRECISE_STATS: False
+  NUM_BATCHES_PRECISE: 200
+  WEIGHT_DECAY: 0.0
+SOLVER:
+  BASE_LR_SCALE_NUM_SHARDS: True
+  BASE_LR: 0.1
+  LR_POLICY: cosine
+  MAX_EPOCH: 300
+  WARMUP_EPOCHS: 0.0 # was 35.0 
+  MOMENTUM: 0.9
+  WARMUP_START_LR: 0.001
+  OPTIMIZING_METHOD: sgd
+TEST:
+  ENABLE: True
+  DATASET: bdd
+  BATCH_SIZE: 64
+NUM_GPUS: 1
+RNG_SEED: 0
+
+OUTPUT_DIR: results/ssl/bdd/moco-x3d/39parts-x3d-xs_10fps-vision
+
+TENSORBOARD:
+  ENABLE: True
+  #LOG_DIR: # Leave empty to use cfg.OUTPUT_DIR/runs-{cfg.TRAIN.DATASET} as path.
+  #CLASS_NAMES_PATH: /home/alp/Desktop/kinetics-dataset/k400/classids.json
+ 
