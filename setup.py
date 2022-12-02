@@ -23,7 +23,7 @@ setup(
         "opencv-python",
         "pandas",
         "torchvision>=0.4.2",
-        "pillow",
+        "Pillow",
         "sklearn",
         "tensorboard",
         "fairscale",
