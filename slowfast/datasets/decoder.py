@@ -270,7 +270,7 @@ def torchvision_decode(
         decode_all_video (bool): if True, the entire video was decoded.
     """
     # Convert the bytes to a tensor.
-    video_tensor = torch.from_numpy(np.frombuffer(video_handle, dtype=np.uint8))
+    video_tensor = torch.from_numpy(np.frombuffer(np.array(video_handle), dtype=np.uint8))
 
     decode_all_video = True
     video_start_pts, video_end_pts = 0, -1
