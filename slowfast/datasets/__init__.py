@@ -8,6 +8,7 @@ from .imagenet import Imagenet  # noqa
 from .kinetics import Kinetics  # noqa
 from .ssv2 import Ssv2  # noqa
 from .bdd import Bdd
+from .carla import Carla
 
 
 try:
